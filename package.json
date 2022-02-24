@@ -8,5 +8,9 @@
   "workspaces": [
     "next-app",
     "ui-library"
-  ]
+  ],
+  "scripts": {
+    "dev": "yarn workspace next-app dev",
+    "build": "yarn workspace next-app build"
+  }
 }
