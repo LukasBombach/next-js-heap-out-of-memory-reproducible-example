@@ -1,0 +1,11 @@
+{
+  "name": "ui-library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "module": "src/index.tsx",
+  "dependencies": {
+    "@emotion/react": "11.8.1",
+    "@emotion/styled": "11.8.1"
+  }
+}
