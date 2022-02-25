@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import { GlobalStyles, Main, Container, Footer, Title, Description, Code, Logo, Grid, Card } from "ui-library";
+import { GlobalStyles, Main, Container, Footer, Title, Description, Code, Logo, Grid, Card, Rainbow } from "ui-library";
 
 import type { NextPage } from "next";
 
@@ -15,6 +15,8 @@ const Home: NextPage = () => {
       </Head>
 
       <GlobalStyles />
+
+      <Rainbow>hello world</Rainbow>
 
       <Main>
         <Title>
@@ -54,7 +56,7 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Powered by
           <Logo>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </Logo>
