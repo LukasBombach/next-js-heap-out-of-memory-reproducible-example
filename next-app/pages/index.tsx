@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -5,7 +6,10 @@ import { GlobalStyles, Main, Container, Footer, Title, Description, Code, Logo, 
 
 import type { NextPage } from "next";
 
+const generateNewRainbow = (numTiles: number) => fetch(`api/genRainbow?numTiles=${numTiles}`);
+
 const Home: NextPage = () => {
+  const [numTiles, setNumTiles] = useState(340);
   return (
     <Container>
       <Head>
@@ -16,7 +20,10 @@ const Home: NextPage = () => {
 
       <GlobalStyles />
 
-      <Rainbow>hello world</Rainbow>
+      <Rainbow />
+
+      <input value={numTiles} onChange={event => setNumTiles(parseInt(event.target.value))} />
+      <button onClick={() => generateNewRainbow(numTiles)}>Generate new rainbow</button>
 
       <Main>
         <Title>
