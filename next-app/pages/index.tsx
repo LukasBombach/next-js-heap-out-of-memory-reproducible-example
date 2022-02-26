@@ -2,14 +2,29 @@ import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
-import { GlobalStyles, Main, Container, Footer, Title, Description, Code, Logo, Grid, Card, Rainbow } from "ui-library";
+import {
+  GlobalStyles,
+  Main,
+  Container,
+  Footer,
+  Title,
+  Description,
+  Code,
+  Logo,
+  Grid,
+  Card,
+  GeneratedComponents,
+} from "ui-library";
 
 import type { NextPage } from "next";
 
-const generateNewRainbow = (numTiles: number) => fetch(`api/genRainbow?numTiles=${numTiles}`);
+const generateComponents = (files: number, components: number) =>
+  fetch(`api/generateComponents?files=${files}&components=${components}`);
 
 const Home: NextPage = () => {
-  const [numTiles, setNumTiles] = useState(340);
+  const [files, setFiles] = useState(330);
+  const [components, setComponents] = useState(330);
+
   return (
     <Container>
       <Head>
@@ -20,10 +35,11 @@ const Home: NextPage = () => {
 
       <GlobalStyles />
 
-      <Rainbow />
+      <input value={files} onChange={event => setFiles(parseInt(event.target.value))} />
+      <input value={components} onChange={event => setComponents(parseInt(event.target.value))} />
+      <button onClick={() => generateComponents(files, components)}>Generate files</button>
 
-      <input value={numTiles} onChange={event => setNumTiles(parseInt(event.target.value))} />
-      <button onClick={() => generateNewRainbow(numTiles)}>Generate new rainbow</button>
+      <GeneratedComponents />
 
       <Main>
         <Title>
