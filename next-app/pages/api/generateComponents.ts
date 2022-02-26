@@ -33,26 +33,35 @@ async function generateIndexFile(files: FileDescription[]) {
   ${files.map(({ name }) => `import * as ${name} from "./${name}"`).join("\n")}
 
 
-  export const Files: VFC = () => (
+  export const GeneratedComponents: VFC = () => (
     <p>
-      ${files.map(({ name, components }) => components.map(({ hex }) => `<${name}.Color${hex} />`)).join("      \n")}
+      ${files
+        .map(({ name, components }) =>
+          components.map(({ hex }) => `<${name}.Color${hex}>&nbsp;</${name}.Color${hex}>`).join("      \n")
+        )
+        .join("      \n")}
     </p>
   );
 
   `;
-  await writeFile("index.tsx", code);
+  await writeFile("index", code);
 }
 
 async function generateFile({ name, components }: FileDescription) {
   const code = `
     import styled from "@emotion/styled";
-    ${components.map(({ hex }) => getComponent(hex)).join("\n")}
+    ${components
+      .map(
+        ({ hex }) =>
+          `export const Color${hex} = styled.span\`display: inline-block; width: 1em; background: #${hex};\`;`
+      )
+      .join("\n")}
   `;
   await writeFile(name, code);
 }
 
 async function writeFile(name: string, contents: string) {
-  const filePath = resolve(process.cwd(), "..", "ui-library/src/generated_dont_touch", name);
+  const filePath = resolve(process.cwd(), "..", "ui-library/src/generated_dont_touch", `${name}.tsx`);
   await fs.writeFile(filePath, contents, "utf-8");
 }
 
