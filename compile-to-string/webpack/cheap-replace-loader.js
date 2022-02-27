@@ -1,6 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-var-requires */
 
-const { name } = require('../package.json');
+const { name } = require("../package.json");
 const loader = `${name}/webpack/compile-to-string-loader.js`;
 
 /*

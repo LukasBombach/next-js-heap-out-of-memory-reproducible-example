@@ -7,7 +7,8 @@
   "license": "MIT",
   "workspaces": [
     "next-app",
-    "ui-library"
+    "ui-library",
+    "compile-to-string"
   ],
   "scripts": {
     "dev": "yarn workspace next-app dev",

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { minify } = require('terser');
+const { minify } = require("terser");
 
 /**
  * This loader will compile and bundle the file it has been called on
@@ -31,9 +31,11 @@ const { minify } = require('terser');
  * @type {import('webpack').LoaderDefinitionFunction}
  */
 module.exports = function compileToStringLoader(content, map, meta) {
-  const COMPILER_NAME = 'CompileToString Child Compiler';
-  const isDev = this._compilation.options.mode === 'development';
+  const COMPILER_NAME = "CompileToString Child Compiler";
+  const isDev = this._compilation.options.mode === "development";
   const loaderCallback = this.async();
+
+  console.log("helllo", content);
 
   /**
    * We are running into an issue where our node process crashes with
@@ -50,7 +52,7 @@ module.exports = function compileToStringLoader(content, map, meta) {
      * We are matching the chunk file output of next js so that integration with next
      * and possibly plugins of next go smoothly
      */
-    filename: isDev ? 'static/chunks/[id].js' : 'static/chunks/[id]-[chunkhash].js',
+    filename: isDev ? "static/chunks/[id].js" : "static/chunks/[id]-[chunkhash].js",
 
     /**
      * This prevents webpack from wrapping the generated sources in an iife
@@ -81,7 +83,7 @@ module.exports = function compileToStringLoader(content, map, meta) {
      * This way we can access the exports.
      */
     library: {
-      type: 'commonjs-module',
+      type: "commonjs-module",
     },
   };
 
@@ -117,9 +119,9 @@ module.exports = function compileToStringLoader(content, map, meta) {
    * plugins as the third parameter
    */
   const childCompiler = this._compilation.createChildCompiler(COMPILER_NAME, outputOptions, [
-    new this._compiler.webpack.LoaderTargetPlugin('web'),
+    new this._compiler.webpack.LoaderTargetPlugin("web"),
     new this._compiler.webpack.EntryPlugin(this._compiler.context, this.resourcePath),
-    new this._compiler.webpack.library.EnableLibraryPlugin('commonjs-module'),
+    new this._compiler.webpack.library.EnableLibraryPlugin("commonjs-module"),
   ]);
 
   /**
@@ -131,7 +133,7 @@ module.exports = function compileToStringLoader(content, map, meta) {
   childCompiler.hooks.thisCompilation.tap(COMPILER_NAME, compilation => {
     const normalModuleHook = this._compiler.webpack.NormalModule.getCompilationHooks(compilation).loader;
     normalModuleHook.tap(COMPILER_NAME, (_loaderContext, module) => {
-      module.loaders = module.loaders.filter(l => !l.loader.endsWith('cheap-replace-loader.js'));
+      module.loaders = module.loaders.filter(l => !l.loader.endsWith("cheap-replace-loader.js"));
     });
   });
 
@@ -166,7 +168,7 @@ module.exports = function compileToStringLoader(content, map, meta) {
       }
 
       if (!source) {
-        throw new Error('Failed to get source in vanilla extract loader');
+        throw new Error("Failed to get source in vanilla extract loader");
       }
 
       const { code } = await minify(source, terserOptions);

@@ -1,7 +1,7 @@
 /* eslint-disable  @typescript-eslint/no-var-requires */
 
-const { createElement } = require('react');
-const { default: dynamic } = require('next/dynamic');
+const { createElement } = require("react");
+const { default: dynamic } = require("next/dynamic");
 
 /**
  * The parameter of this function differs from the TypeScript definition
@@ -40,6 +40,7 @@ module.exports.createInlineScript = function createInlineScript(promiseReturning
     // The parameter we get is already a promise, that we need to wait for it to
     // resolve.
     const { default: compiledScriptSourcesAsString } = await promiseReturningTheCompiledScriptAsString;
+    console.log(await promiseReturningTheCompiledScriptAsString);
 
     return props => {
       // We expected to export a function called `script` from developers using this library.
@@ -57,7 +58,7 @@ module.exports.createInlineScript = function createInlineScript(promiseReturning
       // In other words: This calls the `script` function of the script (module) provided by the
       // developers using the props passed to the react component (the one we return)
       const scriptContents = `${compiledScriptSourcesAsString}.getScriptProps(${JSON.stringify(props)});`;
-      return createElement('script', { dangerouslySetInnerHTML: { __html: scriptContents } }, null);
+      return createElement("script", { dangerouslySetInnerHTML: { __html: scriptContents } }, null);
     };
   });
 };
