@@ -15,7 +15,6 @@ const arrayWithLength = (length: number) => [...Array(length)].map((_, i) => i);
 
 async function generateIndexFile(files: FileDescription[]) {
   const code = `
-  import styled from "@emotion/styled";
   import type { VFC } from "react";
 
   ${files.map(({ name }) => `import { ${name} } from "./${name}"`).join("\n")}
@@ -32,13 +31,16 @@ async function generateIndexFile(files: FileDescription[]) {
 
 async function generateComponentsFile({ name, components }: FileDescription) {
   const code = `
-    import styled from "@emotion/styled";
-    import type { VFC } from "react";
+    // import styled from "@emotion/styled";
+    import { css } from '@emotion/react'
+    import type { VFC, FC } from "react";
 
     ${components
       .map(
         ({ hex }) =>
-          `const Color${hex} = styled.span\`display: inline-block; width: 1em; text-indent: -9999em; background: #${hex};\`;`
+          // `const Color${hex} = styled.span\`display: inline-block; width: 1em; text-indent: -9999em; background: #${hex};\`;`
+          `const color${hex} = css\`display: inline-block; width: 1em; text-indent: -9999em; background: #${hex};\`;
+          const Color${hex}: FC = ({ children }) => <span css={color${hex}}>{children}</span>`
       )
       .join("\n")}
 
@@ -63,7 +65,7 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const numComponents = Array.isArray(q.components) ? parseInt(q.components[0]) : parseInt(q.components);
 
   const description: FileDescription[] = arrayWithLength(numFiles).map(i => ({
-    name: `File${randomHex()}`,
+    name: `File${i}`,
     components: arrayWithLength(numComponents).map(() => ({
       hex: randomHex(),
     })),

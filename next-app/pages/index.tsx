@@ -22,8 +22,8 @@ const generateComponents = (files: number, components: number) =>
   fetch(`api/generateComponents?files=${files}&components=${components}`);
 
 const Home: NextPage = () => {
-  const [files, setFiles] = useState(5);
-  const [components, setComponents] = useState(10);
+  const [files, setFiles] = useState(220);
+  const [components, setComponents] = useState(3);
 
   return (
     <Container>
