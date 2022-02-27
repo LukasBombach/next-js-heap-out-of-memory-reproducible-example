@@ -63,7 +63,7 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const numComponents = Array.isArray(q.components) ? parseInt(q.components[0]) : parseInt(q.components);
 
   const description: FileDescription[] = arrayWithLength(numFiles).map(i => ({
-    name: `File${i}`,
+    name: `File${randomHex()}`,
     components: arrayWithLength(numComponents).map(() => ({
       hex: randomHex(),
     })),
